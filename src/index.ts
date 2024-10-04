@@ -186,10 +186,9 @@ app.get("/", (req, res) => {
     const minutes = addZero(date.getMinutes());
     const currentTime = `${hours}:${minutes}`;
 
-    console.log(`Current time: ${currentTime}`);
-    console.log(`Day: ${day} (${date.getDay()})`);
-    console.table(config.schedule);
-    console.log(`Schedule: ${JSON.stringify(config.schedule[day])}`);
+    // console.log(`Current time: ${currentTime}`);
+    // console.log(`Day: ${day} (${date.getDay()})`);
+    // console.log(`Schedule: ${JSON.stringify(config.schedule[day])}`);
 
     if (!config.schedule[day]) {
         throw new Error("Invalid day");

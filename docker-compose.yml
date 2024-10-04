@@ -1,6 +1,6 @@
 services:
   areweopen:
-    image: ghcr.io/alexveebee/areweopen/areweopen:latest
+    image: ghcr.io/alexveebee/areweopen:latest
     restart: unless-stopped
     ports:
       - "8080:3000"
