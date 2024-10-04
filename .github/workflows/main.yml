@@ -8,7 +8,7 @@ on:
 
 env:
     REGISTRY: ghcr.io
-    REPO_USER: ${{ github.actor }}
+    REPO_USER: alexveebee
     REPO_NAME: ${{ github.repository }}
     IMAGE_NAME: areweopen
 
