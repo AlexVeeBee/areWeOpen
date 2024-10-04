@@ -25,6 +25,6 @@ jobs:
           uses: docker/build-push-action@v2
           with:
                 context: .
-                file: .dockerfile
+                file: dockerfile
                 tags: ${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:latest
                 push: true
