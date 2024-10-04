@@ -21,9 +21,16 @@ jobs:
         steps:
         - uses: actions/checkout@v2
 
-        - name: Login to GitHub Container Registry
-          run: echo "${{ secrets.REGISTRY_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-   
+        # - name: Login to GitHub Container Registry
+        #   run: echo "${{ secrets.REGISTRY_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+  
+        - name: Login to registry
+          uses: docker/login-action@v2
+          with:
+            registry: ${{ env.REGISTRY }}
+            username: ${{ github.actor }}
+            password: ${{ secrets.REGISTRY_TOKEN }}
+        
         - name: Build and Push Docker image
           run: |
               docker buildx build --file dockerfile --iidfile /tmp/docker-build-push-1deP5g/iidfile --tag ghcr.io/alexveebee/areweopen/areweopen:latest --metadata-file /tmp/docker-build-push-1deP5g/metadata-file --push .
