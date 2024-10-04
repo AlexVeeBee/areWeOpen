@@ -6,38 +6,38 @@ const configFile = "./config/config.json";
 const defaultConfigSchedule : Record<string, timeSchedule> = {
     monday: {
         closedAllDay: false,
-        open: "9:00",
+        open: "09:00",
         close: "17:00"
     },
     tuesday: {
         closedAllDay: false,
-        open: "9:00",
+        open: "09:00",
         close: "17:00"
     },
     wednesday: {
         closedAllDay: false,
-        open: "9:00",
+        open: "°09:00",
         close: "17:00"
     },
     thursday: {
         closedAllDay: false,
-        open: "9:00",
+        open: "09:00",
         close: "17:00"
     },
     friday: {
         closedAllDay: false,
-        open: "9:00",
+        open: "09:00",
         close: "17:00"
     },
     saturday: {
         closedAllDay: false,
-        open: "9:00",
+        open: "09:00",
         close: "17:00"
     },
     sunday: {
         closedAllDay: true,
-        open: "0:00",
-        close: "0:00"
+        open: "00:00",
+        close: "00:00"
     }
 }
 
@@ -111,6 +111,7 @@ class FileConfig extends EventTarget {
                 onChange();
             }
         });
+        this.watcher = watcher;
     }
 }
 
@@ -134,7 +135,6 @@ config.on("configError", () => {
 
 config.on("configSaved", () => {
     console.log("Config saved");
-    timeSchedule = config.schedule;
 });
 
 const app = Express();
@@ -173,26 +173,31 @@ const getDayOfWeek = (day: number) => {
     }
 }
 
+const addZero = (num: number) => {
+    return num < 10 ? `0${num}` : num;
+}
+
 const timeZone = new Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 app.get("/", (req, res) => {
     const date = new Date();
     const day = getDayOfWeek(date.getDay());
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
+    const hours = addZero(date.getHours());
+    const minutes = addZero(date.getMinutes());
     const currentTime = `${hours}:${minutes}`;
 
     console.log(`Current time: ${currentTime}`);
-    console.log(`Day: ${day}`);
-    console.log(`Schedule: ${JSON.stringify(timeSchedule[day])}`);
+    console.log(`Day: ${day} (${date.getDay()})`);
+    console.table(config.schedule);
+    console.log(`Schedule: ${JSON.stringify(config.schedule[day])}`);
 
-    if (!timeSchedule[day]) {
+    if (!config.schedule[day]) {
         throw new Error("Invalid day");
     }
 
-    if (timeSchedule[day].closedAllDay) {
+    if (config.schedule[day].closedAllDay) {
         areWeOpen = false;
-    } else if (TimeRange(timeSchedule[day].open, timeSchedule[day].close)(currentTime)) {
+    } else if (TimeRange(config.schedule[day].open, config.schedule[day].close)(currentTime)) {
         areWeOpen = true;
     } else {
         areWeOpen = false;
@@ -201,7 +206,7 @@ app.get("/", (req, res) => {
     res.send({
         currentTime: currentTime,
         timeZone: timeZone,
-        schedule: timeSchedule[day],
+        schedule: config.schedule[day],
         day: day,
         dayOfWeek: date.getDay(),
         areWeOpen: areWeOpen,

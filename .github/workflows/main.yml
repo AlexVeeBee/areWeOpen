@@ -35,7 +35,7 @@ jobs:
         - name: Build and Push Docker image
           run: |
             mkdir -p /tmp/docker-build-push-1deP5g/
-            docker buildx build --file dockerfile --iidfile /tmp/docker-build-push-1deP5g/iidfile --tag ghcr.io/alexveebee/areweopen/areweopen:latest --metadata-file /tmp/docker-build-push-1deP5g/metadata-file --push .
+            docker buildx build --file dockerfile --iidfile /tmp/docker-build-push-1deP5g/iidfile --tag ghcr.io/alexveebee/areweopen:latest --metadata-file /tmp/docker-build-push-1deP5g/metadata-file --push .
         
         # - name: build and push
         #   uses: docker/build-push-action@v2
@@ -44,3 +44,4 @@ jobs:
         #         file: dockerfile
         #         tags: ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:latest
         #         push: true
+
