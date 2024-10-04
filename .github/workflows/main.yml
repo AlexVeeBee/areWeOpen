@@ -30,10 +30,12 @@ jobs:
             registry: ${{ env.REGISTRY }}
             username: ${{ github.actor }}
             password: ${{ secrets.REGISTRY_TOKEN }}
+            # docker buildx create --name mybuilder
         
         - name: Build and Push Docker image
           run: |
-              docker buildx build --file dockerfile --iidfile /tmp/docker-build-push-1deP5g/iidfile --tag ghcr.io/alexveebee/areweopen/areweopen:latest --metadata-file /tmp/docker-build-push-1deP5g/metadata-file --push .
+            mkdir -p /tmp/docker-build-push-1deP5g/
+            docker buildx build --file dockerfile --iidfile /tmp/docker-build-push-1deP5g/iidfile --tag ghcr.io/alexveebee/areweopen/areweopen:latest --metadata-file /tmp/docker-build-push-1deP5g/metadata-file --push .
         
         # - name: build and push
         #   uses: docker/build-push-action@v2
