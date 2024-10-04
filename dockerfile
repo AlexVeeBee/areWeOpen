@@ -6,9 +6,6 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 COPY . /app
 
-# setup yarn
-RUN npm install -g yarn
-
 # Install any needed packages specified in package.json
 RUN yarn install
 
