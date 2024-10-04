@@ -1,0 +1,20 @@
+{
+  "name": "arweopen",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "license": "MIT",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "tsc -w & nodemon dist/index.js --config nodemon.json",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "nodemon": "^3.1.7",
+    "tsc": "^2.0.4",
+    "typescript": "^5.6.2"
+  }
+}
